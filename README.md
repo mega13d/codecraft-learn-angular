@@ -1,3 +1,5 @@
-# github-tkmfwy
+# Learn Angular
+Learn Angular, angular what you learn!
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/github-tkmfwy)
+## YouTrack
+https://mega13d.myjetbrains.com/youtrack/issue/LANG-10
