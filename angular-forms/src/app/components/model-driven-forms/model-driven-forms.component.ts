@@ -30,7 +30,7 @@ export class ModelDrivenFormsComponent implements OnInit {
   private createFormControls() {
     this.email = new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-z-]+@edifecs.com")
+      Validators.pattern("c-[A-Za-z]+@edifecs.com")
     ]);
     this.password = new FormControl('', [
       Validators.required,

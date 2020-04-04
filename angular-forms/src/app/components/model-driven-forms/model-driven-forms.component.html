@@ -10,8 +10,8 @@
              formControlName="email"
              required
              [ngClass]="{
-        'is-invalid': email.invalid && (email.dirty || email.touched),
-        'is-valid': email.valid && (email.dirty || email.touched)
+              'is-invalid': email.invalid && (email.dirty || email.touched),
+              'is-valid': email.valid && (email.dirty || email.touched)
       }">
     </div>
 
@@ -20,6 +20,10 @@
       <input type="password"
              class="form-control"
              formControlName="password"
+             [ngClass]="{
+              'is-invalid': password.invalid && (password.dirty || password.touched),
+              'is-valid': password.valid && (password.dirty || password.touched)
+      }"
       >
     </div>
 
