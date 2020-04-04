@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
@@ -9,19 +9,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 })
 export class ModelDrivenFormsComponent implements OnInit {
   myForm: FormGroup;
-
+  email: FormControl;
+  password: FormControl;
 
   constructor() { }
 
   ngOnInit() {
-    this.myForm = new FormGroup({
-      name: new FormGroup({
-        firstName: new FormControl(),
-        lastName: new FormControl()
-      }),
-      email: new FormControl(),
-      password: new FormControl()
-    });
+    this.createFormControls();
+    this.createForm();
   }
 
   onSubmit() {
@@ -30,5 +25,23 @@ export class ModelDrivenFormsComponent implements OnInit {
       console.log(this.myForm.value);
       this.myForm.reset();
     }
+  }
+
+  private createFormControls() {
+    this.email = new FormControl('', [
+      Validators.required,
+      Validators.pattern("[A-Za-z-]+@edifecs.com")
+    ]);
+    this.password = new FormControl('', [
+      Validators.required,
+      Validators.minLength(6)
+    ]);
+  }
+
+  private createForm() {
+    this.myForm = new FormGroup({
+      email: this.email,
+      password: this.password
+    });
   }
 }
