@@ -30,7 +30,8 @@ export class ModelDrivenFormsComponent implements OnInit {
   private createFormControls() {
     this.email = new FormControl('', [
       Validators.required,
-      Validators.pattern("c-[A-Za-z]+@edifecs.com")
+      Validators.pattern("c-[A-Za-z]+@[a-z.]+"),
+      this.emailDomainValidator
     ]);
     this.password = new FormControl('', [
       Validators.required,
@@ -43,5 +44,20 @@ export class ModelDrivenFormsComponent implements OnInit {
       email: this.email,
       password: this.password
     });
+  }
+
+  private emailDomainValidator(control: FormControl) {
+    const emailValue = control.value;
+    if (emailValue && emailValue.indexOf("@") !== -1) {
+      const [_, domain] = emailValue.split("@");
+      if (domain !== "edifecs.com") {
+        return {
+          emailDomain: {
+            parsedDomain: domain
+          }
+        };
+      }
+    }
+    return null;
   }
 }

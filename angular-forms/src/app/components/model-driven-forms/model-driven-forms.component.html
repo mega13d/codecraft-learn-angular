@@ -15,7 +15,8 @@
       }">
       <div class="invalid-feedback"
            *ngIf="email.invalid && email.dirty">
-        Please provide an email in <i>c-criscasa@edifecs.com</i> style!
+        <p *ngIf="email.errors.pattern">Please provide an email in <i>c-criscasa@edifecs.com</i> style!<p>
+        <p *ngIf="email.errors.emailDomain">Email should be on edifecs.com domain!<p>
       </div>
     </div>
 
