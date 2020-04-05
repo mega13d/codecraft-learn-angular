@@ -1,0 +1,13 @@
+<form novalidate [formGroup]="heroForm" class="form-group">
+    <label>Name</label>
+    <input id="password" class="form-control"
+           formControlName="password" required >
+
+    <label>AlterEgo</label>
+    <input id="confirmPassword" class="form-control"
+           formControlName="confirmPassword" required >
+    <div *ngIf="heroForm.errors?.noMatch && (heroForm.touched || heroForm.dirty)" class="cross-validation-error-message alert alert-danger">
+      Password and Confirm password do not match!
+    </div>
+  {{heroForm.errors | json}}
+</form>
