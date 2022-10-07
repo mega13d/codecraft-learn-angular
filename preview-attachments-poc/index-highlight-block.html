@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+</head>
+<body>
+ Hello, there!!! <br>
+
+ Here is a JavaScript highlighted content: <br>
+ <pre id="high-js"></pre>
+
+ <script>
+     hljs.initHighlightingOnLoad();
+     let jsContent = 'var itemTypes = {};\n' +
+     'itemTypes[\'Claims\'] = {\n' +
+     '    businessItemName    : \'Claim\',\n' +
+     '    itemSidFieldName    : \'System ID\'\n' +
+     '};\n' +
+     'itemTypes[\'Functional Group\'] = {\n' +
+     '    businessItemName    : \'FunctionalGroup\',\n' +
+     '    itemSidFieldName    : \'System ID\'\n' +
+     '};\n' +
+     'itemTypes[\'Implementation Acknowledgment  999\'] = {\n' +
+     '    businessItemName    : \'ImplementationAck\',\n' +
+     '    itemSidFieldName    : \'System ID\'\n' +
+     '};\n' +
+     'itemTypes[\'Claims Acknowledgement 277CA\'] = {\n' +
+     '    businessItemName    : \'ClaimStatusInformation\',\n' +
+     '    itemSidFieldName    : \'System ID\'\n' +
+     '};\n' +
+     '\n' +
+     '//item types that are not part of itemTypes array are not supported for Drill Through in current EDI Dashboards 1.7 version\n' +
+     '\n' +
+     'function treatMarksLvGbd(selectedMarks) {\n' +
+     '    if (selectedMarks.length === 1) { //Item View display only one item\n' +
+     '        var pairs = selectedMarks[0].getPairs();\n' +
+     '        var itemSidField = itemTypes[worksheetName].itemSidFieldName;\n' +
+     '        var itemSID = pairs.get(itemSidField) ? pairs.get(itemSidField).value : false;\n' +
+     '        var businessItemName = itemTypes[worksheetName].businessItemName;\n' +
+     '        if (itemSID) {\n' +
+     '            itemUrl += addUrlParam(itemUrl, "Link", "/ui/tab/49/14/item/" + businessItemName + "/" + itemSID);\n' +
+     '            if(go)\n' +
+     '                window.open(itemUrl, "_parent");\n' +
+     '        }\n' +
+     '    }\n' +
+     '}\n' +
+     '\n' +
+     'var itemUrl = worksheetName = \'\', go = true; //go - for testing purposes\n' +
+     '\n' +
+     'viz.addEventListener(tableau.TableauEventName.MARKS_SELECTION,\n' +
+     '    function (marks) {\n' +
+     '        itemUrl = dashboard.drill_through.dashDrillBaseUrl;\n' +
+     '        worksheetName = marks.getWorksheet().getName();\n' +
+     '        marks.getMarksAsync()\n' +
+     '            .then(treatMarksLvGbd);\n' +
+     '    }\n' +
+     ');\n';
+
+     let jsEl = document.getElementById("high-js");
+     jsEl.innerHTML = jsContent;
+     hljs.highlightBlock(jsEl);
+ </script>
+</body>
+</html>

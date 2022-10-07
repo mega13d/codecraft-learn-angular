@@ -1,0 +1,498 @@
+import {Component, OnInit} from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'preview-attachments-poc';
+  content = "var itemTypes = {};\n" +
+    "itemTypes['Claims'] = {\n" +
+    "    businessItemName    : 'Claim',\n" +
+    "    itemSidFieldName    : 'System ID'\n" +
+    "};\n" +
+    "itemTypes['Functional Group'] = {\n" +
+    "    businessItemName    : 'FunctionalGroup',\n" +
+    "    itemSidFieldName    : 'System ID'\n" +
+    "};\n" +
+    "itemTypes['Implementation Acknowledgment  999'] = {\n" +
+    "    businessItemName    : 'ImplementationAck',\n" +
+    "    itemSidFieldName    : 'System ID'\n" +
+    "};\n" +
+    "itemTypes['Claims Acknowledgement 277CA'] = {\n" +
+    "    businessItemName    : 'ClaimStatusInformation',\n" +
+    "    itemSidFieldName    : 'System ID'\n" +
+    "};\n" +
+    "\n" +
+    "//item types that are not part of itemTypes array are not supported for Drill Through in current EDI Dashboards 1.7 version\n" +
+    "\n" +
+    "function treatMarksLvGbd(selectedMarks) {\n" +
+    "    if (selectedMarks.length === 1) { //Item View display only one item\n" +
+    "        var pairs = selectedMarks[0].getPairs();\n" +
+    "        var itemSidField = itemTypes[worksheetName].itemSidFieldName;\n" +
+    "        var itemSID = pairs.get(itemSidField) ? pairs.get(itemSidField).value : false;\n" +
+    "        var businessItemName = itemTypes[worksheetName].businessItemName;\n" +
+    "        if (itemSID) {\n" +
+    "            itemUrl += addUrlParam(itemUrl, \"Link\", \"/ui/tab/49/14/item/\" + businessItemName + \"/\" + itemSID);\n" +
+    "            if(go)\n" +
+    "                window.open(itemUrl, \"_parent\");\n" +
+    "        }\n" +
+    "    }\n" +
+    "}\n" +
+    "\n" +
+    "var itemUrl = worksheetName = '', go = true; //go - for testing purposes\n" +
+    "\n" +
+    "viz.addEventListener(tableau.TableauEventName.MARKS_SELECTION,\n" +
+    "    function (marks) {\n" +
+    "        itemUrl = dashboard.drill_through.dashDrillBaseUrl;\n" +
+    "        worksheetName = marks.getWorksheet().getName();\n" +
+    "        marks.getMarksAsync()\n" +
+    "            .then(treatMarksLvGbd);\n" +
+    "    }\n" +
+    ");\n";
+
+  xmlContent = '<?xml version="1.0" encoding="ISO-8859-1"?>\n' +
+    '<messages>\n' +
+    ' \n' +
+    ' \n' +
+    '    <!--==================================================================     \n' +
+    '     (C) 1999, 2000, 2001, 2002, 2003, 2004, 2005 Edifecs, Inc. \n' +
+    '     All rights reserved\n' +
+    ' \n' +
+    '     This XML File Contains the error message definitions for CommerceDesk.\n' +
+    '     These messages are grouped as follows:\n' +
+    ' \n' +
+    '     - MISC:     ???, Common, CVS, File Utility, Other, Params, Run, Tasks, \n' +
+    '                 Validation, XML\n' +
+    '    \n' +
+    '     - CORE:     BIPS, Database, Enums, Object Pool, Repository, Security\n' +
+    '     - ITEM:     [Item Type]\n' +
+    '     - SERVICE:  Guideline Convt, Task Manager, Validation, \n' +
+    '     - UI:       Handlers, JSP, UI Utilities, Wizards\n' +
+    '    \n' +
+    '     NOTE: This file is generally arranged as follows:\n' +
+    '    \n' +
+    '     Group (Alphabetical)\n' +
+    '      Sub Group (Alphabetical)\n' +
+    '        Message ID (Numerical)     \n' +
+    '    ==================================================================-->\n' +
+    '    \n' +
+    '    <!--==================================================================-->\n' +
+    '    <!-- MISC: This section contains misc. messages.                      -->\n' +
+    '    <!--==================================================================-->\n' +
+    '\n' +
+    '    <!--==============- MISC:  ????  ====================-->\n' +
+    '    <message id="CDESK_RCVOP_00001" sv="debug">\n' +
+    '        <message-text>An unknown exception occurred in the performAction method.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="CDESK_RCVOP_00002" sv="debug">\n' +
+    '        <message-text>An exception occurred while saving the enrollment.</message-text>\n' +
+    '    </message>\n' +
+    '\n' +
+    '    \n' +
+    '    <!--================ MISC: ????  ====================-->\n' +
+    '    <message id="CDESK_TRXML_00001" sv="debug">\n' +
+    '        <message-text>No classname or mapfile specified.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="CDESK_TRXML_00002" sv="debug">\n' +
+    '        <message-text>The specified queue was not a number; using queue 1.</message-text>\n' +
+    '    </message>\n' +
+    '\n' +
+    '\n' +
+    '    <!--================ MISC:  ????  ====================-->   \n' +
+    '    <message id="{0}" sv="debug">\n' +
+    '        <message-text>contains the error sting.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="1" sv="ERROR">\n' +
+    '        <message-text>Unable to include one of HTML editor\'s component.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="2" sv="FATAL">\n' +
+    '        <message-text>ItemDefinitions collection failed to load.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="3" sv="FATAL">\n' +
+    '        <message-text>Enums collection failed to load.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="4" sv="FATAL">\n' +
+    '        <message-text>Application Server initialization failed.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="5" sv="INFO">\n' +
+    '        <message-text>Cannot create an object of type {0}.</message-text>\n' +
+    '    </message>\n' +
+    '    <message id="6" sv="ERROR">\n' +
+    '        <message-text>Unable to load the Membership objects for ContactID={0}.</message-text>\n' +
+    '    </message>\n' +
+    '</messages>';
+
+  htmlContent = '\n' +
+    '  \n' +
+    '  \n' +
+    '  \n' +
+    '\n' +
+    '<html>\n' +
+    '\n' +
+    '<meta http-equiv="content-type" content="text/html"/>\n' +
+    '<style type="Text/css">\n' +
+    '       p {font-family: arial; font-size:10pt}\n' +
+    '       th {font-family: arial, helvetica; font-size:10pt; text-align: left;color:#FFFFFF;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:1;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:1;\n' +
+    '\t\tbackground-color: #888888; \n' +
+    '\t\tPADDING-LEFT: 2px;}\n' +
+    '\n' +
+    '       td {font-family: arial; font-size:8pt; padding:0}\n' +
+    '       table{border-collapse: collapse; border-color=#000000;}\n' +
+    '       \n' +
+    '       .fontAH2 {color: #000000;font-family: arial, helvetica; font-size:10pt}\n' +
+    '       .fontAH3 {color: #000000;font-family: arial, helvetica; font-size:12pt}\n' +
+    '       .fontAH2CB {font-family: arial, helvetica; font-size:10pt; border-left: solid 1; border-top-width:1; border-bottom-width:1}\n' +
+    '       \n' +
+    '       .CellBorder{\t\t\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:1;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:0;\n' +
+    '\t\t}\n' +
+    '\n' +
+    '       .CellBorderAll{\t\t\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid; border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid; border-top-width:1;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid; border-right-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid; border-bottom-width:1;}\n' +
+    '\n' +
+    '       .CellBorderLTB{font-family: Arial; font-size:13;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:0;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:1;}\n' +
+    '\n' +
+    '       .CellBorderLT{font-family: Arial; font-size:13;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:0;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:0;}\n' +
+    '\n' +
+    '       .CellBorderL{font-family: Arial; font-size:13;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:0;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:0;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:0;}\n' +
+    '\n' +
+    '       .CellBorderR{font-family: Arial; font-size:13;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:1;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:0;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:0;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:0;}\n' +
+    '\n' +
+    '       .CellBorderLBR{font-family: Arial; font-size:13;\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:1;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:1;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:0;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:1;}\n' +
+    '\n' +
+    '       .CellBorderTB{\t\t\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:0;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:0;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:1;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:1;}\n' +
+    '\n' +
+    '\t.CellBorderB{\n' +
+    '\t\tborder-right-color:#000000;border-right-style:solid;border-right-width:0;\n' +
+    '\t\tborder-left-color:#000000;border-left-style:solid;border-left-width:0;\n' +
+    '\t\tborder-top-color:#000000;border-top-style:solid;border-top-width:0;\n' +
+    '\t\tborder-bottom-color:#000000;border-bottom-style:solid;border-bottom-width:1;}\n' +
+    '      </style>\n' +
+    '   \n' +
+    '\n' +
+    '   \n' +
+    '\n' +
+    '   \n' +
+    '   \n' +
+    '\n' +
+    '   \n' +
+    '   \n' +
+    '     \n' +
+    '   \n' +
+    '\n' +
+    '   \n' +
+    '  \n' +
+    '   \n' +
+    '\n' +
+    '<hr size="4" color="#888888"/>\n' +
+    '\n' +
+    ' <table width="100%">\n' +
+    '  <tr valign="top">\n' +
+    '   <td width="2%" />&nbsp;&nbsp;\n' +
+    '   <td width="59%"><strong class="fontAH3">Error Report</strong>\n' +
+    '    <br/>\n' +
+    '     <font face="Arial,Helvetica" size="1"><i>Executed Wednesday, March 11, 2020 04:58:02 PM (GMT)<br/>H:\\Edifecs\\XEServer\\profiles\\TM_RIM_GBD\\workspace\\61409623-418D-441B-B644-87E7DC1E9BC1</i></font>\n' +
+    '    <br/>\n' +
+    '   </td>\n' +
+    '   <td width="34%" align="Right"><b><i>Powered by Edifecs</i></b></td>\n' +
+    '  </tr>\n' +
+    ' </table>\n' +
+    ' <hr size="1" color="#888888"/>\n' +
+    ' <table width="100%">\n' +
+    '  <tr>\n' +
+    '   <td width="100%" class="fontAH2">This report shows the results of a submitted data file validated against a guideline. If there are errors, you must fix the application that created the data file and then generate and submit a new data file.</td>\n' +
+    '  </tr>\n' +
+    ' </table>\n' +
+    ' <hr size="1" color="#888888"/>\n' +
+    '\n' +
+    ' <table border="1" width="100%">\n' +
+    '  <tr><th>Report Summary</th><th>Error Severity Summary</th><th>File Information</th></tr>\n' +
+    '  <tr>\n' +
+    '   <td width="33%" align="center" class="fontAH2" style="border-color:#000000" ><b>Passed<br/>0 Error(s)</b></td>\n' +
+    '   <td width="33%" style="border-color:#000000" >\n' +
+    '    <table>\n' +
+    '     \n' +
+    '    </table>\n' +
+    '   </td>\n' +
+    '   <td width="33%" align="center" class="fontAH2" style="border-color:#000000">\n' +
+    '    <table width="100%">\n' +
+    '     <tr>\n' +
+    '      <td width="2%" />&nbsp;&nbsp;<td width="20%">Interchange Received: </td><td width="11%">1</td>\n' +
+    '     </tr>\n' +
+    '     <tr>\n' +
+    '      <td width="2%" />&nbsp;&nbsp;<td width="20%">Interchange Accepted: </td><td width="11%">1</td>\n' +
+    '     </tr>\n' +
+    '    </table>\n' +
+    '   </td>\n' +
+    '  </tr>\n' +
+    ' </table>\n' +
+    '<hr size="1" color="#888888"/>\n' +
+    '\n' +
+    '    \n' +
+    '       <table width="100%" style="margin:3px 0px 0px 0px">\n' +
+    '        <tr>\n' +
+    '        \n' +
+    '        \n' +
+    '         \n' +
+    '          <table border="0" width="100%">\n' +
+    '\n' +
+    '\n' +
+    '    \n' +
+    '       <table width="100%" style="margin:3px 0px 0px 0px">\n' +
+    '        <tr>\n' +
+    '        \n' +
+    '        \n' +
+    '         <td style="background:#ffffff" width="100%" class="CellBorderAll">\n' +
+    '         \n' +
+    '         <table width="100%">\n' +
+    '           <tr>\n' +
+    '            <th colspan="2" class="CellBorderB"><a name="1">1 Interchange</a></th>\n' +
+    '           </tr>\n' +
+    '          </table>\n' +
+    '          <table border="0" width="100%">\n' +
+    '\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>\n' +
+    '    <td width="98%" class="fontAH2">\n' +
+    '     <b>Interchange Status: Accepted</b> \n' +
+    '     \n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="100%" colspan="2">\n' +
+    '     <table width="100%" height="100%" cellpadding="2" cellSpacing="0">\n' +
+    '      <tr>    \n' +
+    '       <td width="20%"/>\n' +
+    '       <td width="20%"><table>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">FunctionalGroup Received: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">FunctionalGroup Accepted: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '</table></td>\n' +
+    '       <td width="60%">\n' +
+    '        \n' +
+    '<table align="center" width="90%">\n' +
+    '  <tr>\n' +
+    '    <td align="left">Sender ID: Interchange Sen</td>\n' +
+    '    <td align="left">Sender Qualifier: ZZ</td>\n' +
+    '  </tr>\n' +
+    '  <tr>\n' +
+    '    <td align="left">Receiver ID: Interchange Rec</td>\n' +
+    '    <td align="left">Receiver Qualifier: ZZ</td>\n' +
+    '  </tr>\n' +
+    '  <tr>\n' +
+    '    <td align="left">Control Number: 000000001</td>\n' +
+    '    <td align="left">Version: 00501</td>\n' +
+    '  </tr>\n' +
+    '  <tr>\n' +
+    '    <td align="left">Date: 110201</td>\n' +
+    '    <td align="left">Time: 1211</td>\n' +
+    '  </tr>\n' +
+    '</table>\n' +
+    '\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '    \n' +
+    '     <tr>\n' +
+    '      <td width="100%" colspan="2">\n' +
+    '       <table width="100%" style="margin:3px 0px 0px 0px">\n' +
+    '        <tr>\n' +
+    '        \n' +
+    '         <td width="2%"/>\n' +
+    '         <td style="background:#ffffff" width="98%" class="CellBorderLT">\n' +
+    '        \n' +
+    '         \n' +
+    '         <table width="100%">\n' +
+    '           <tr>\n' +
+    '            <th colspan="2" class="CellBorderB"><a name="1.1">1.1 FunctionalGroup</a></th>\n' +
+    '           </tr>\n' +
+    '          </table>\n' +
+    '          <table border="0" width="100%">\n' +
+    '\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>\n' +
+    '    <td width="98%" class="fontAH2">\n' +
+    '     <b>FunctionalGroup Status: Accepted</b> \n' +
+    '     \n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="100%" colspan="2">\n' +
+    '     <table width="100%" height="100%" cellpadding="2" cellSpacing="0">\n' +
+    '      <tr>    \n' +
+    '       <td width="20%"/>\n' +
+    '       <td width="20%"><table>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">TransactionSets Received: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">TransactionSets Accepted: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '</table></td>\n' +
+    '       <td width="60%">\n' +
+    '        \n' +
+    '<table align="center" width="90%">\n' +
+    '  <tr>\n' +
+    '    <td align="left">Sender ID: Application Sen</td>\n' +
+    '    <td align="left">Receiver ID: Application Rec</td>\n' +
+    '  </tr>\n' +
+    '  <tr>\n' +
+    '    <td align="left">Control Number: 1</td>\n' +
+    '    <td align="left">Version: 005010X220A1</td>\n' +
+    '  </tr>\n' +
+    '  <tr>\n' +
+    '    <td align="left">Date: 20110201</td>\n' +
+    '    <td align="left">Time: 121105</td>\n' +
+    '  </tr>\n' +
+    '</table>\n' +
+    '\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '    \n' +
+    '     <tr>\n' +
+    '      <td width="100%" colspan="2">\n' +
+    '       <table width="100%" style="margin:3px 0px 0px 0px">\n' +
+    '        <tr>\n' +
+    '        \n' +
+    '         <td width="2%"/>\n' +
+    '         <td style="background:#ffffff" width="98%" class="CellBorderLT">\n' +
+    '        \n' +
+    '         \n' +
+    '         <table width="100%">\n' +
+    '           <tr>\n' +
+    '            <th colspan="2" class="CellBorderB"><a name="1.1.1">1.1.1 Transaction</a></th>\n' +
+    '           </tr>\n' +
+    '          </table>\n' +
+    '          <table border="0" width="100%">\n' +
+    '\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>\n' +
+    '    <td width="98%" class="fontAH2">\n' +
+    '     <b>Transaction Status: Accepted</b> \n' +
+    '     \n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="100%" colspan="2">\n' +
+    '     <table width="100%" height="100%" cellpadding="2" cellSpacing="0">\n' +
+    '      <tr>    \n' +
+    '       <td width="20%"/>\n' +
+    '       <td width="20%"><table>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">Member Received: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '   <tr>\n' +
+    '    <td width="2%"/>&nbsp;&nbsp;\n' +
+    '    <td width="30%">Member Accepted: </td>\n' +
+    '    <td width="11%">1</td>\n' +
+    '   </tr>\n' +
+    '</table></td>\n' +
+    '       <td width="60%">\n' +
+    '        \n' +
+    '<table align="center" width="90%">\n' +
+    '  <tr>\n' +
+    '    <td align="left">Control Number: 0001</td>\n' +
+    '    <td align="left">Transaction ID: 834</td>\n' +
+    '    \n' +
+    '  </tr>\n' +
+    '</table>\n' +
+    '\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '        </table>\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '        </table>\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '        </table>\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '        </table>\n' +
+    '       </td>\n' +
+    '      </tr>\n' +
+    '     </table>\n' +
+    '    </td>\n' +
+    '   </tr>\n' +
+    '\n' +
+    '<hr size="4" color="#888888"/>\n' +
+    '\n' +
+    '  \n' +
+    '<p align="center">This report is the proprietary and confidential information of Edifecs, Inc. Any unauthorized use or disclosure of this report, or any portion or derivative thereof, is strictly prohibited.</p>\n' +
+    '</html>';
+
+
+  ngOnInit(): void { // ok }
+}
