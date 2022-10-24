@@ -1,6 +1,14 @@
 # Learn Angular with me
 Angular tips and tricks
 
+## Problem - Format displayed Date
+### Observables, Pipe and RxJS BehaviorSubject
+https://malcoded.com/posts/angular-async-pipe/
+
+If you want to format the date using a pipe, [RxJS BehaviorSubject](https://www.learnrxjs.io/learn-rxjs/subjects/behaviorsubject) will help you.
+
+It requires an initial value and emits the current value to new subscribers.
+
 ## Angular Test with Karma
 To run only one spec file or method with Karma in Angular Idea project, add `f` prefix: 
 
